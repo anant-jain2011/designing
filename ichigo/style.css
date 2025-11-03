@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zoro {
+    height: 260px;
+    width: 210px;
+    /* display: flex; */
+    background: #ffecc8;
+    border-radius: 50px;
+}
+
+.zoro > .hair {
+    background-color: rgb(5, 184, 5);
+    margin-top: -5px;
+    width: 225px;
+    height: 65px;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    margin-left: -7.7px;
+}
+
+.zoro > .face {
+    height: 260px;
+    width: 210px;
+}
+
+.zoro > .eyes {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 25px;
+}
+
+.zoro > .eyes .eye {
+    height: 40px;
+    width: 30px;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border: 1px solid #333333;
+}
+
+.zoro > .nose {
+    width: 10px;
+    height: 10px;
+    margin-top: 16px;
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-family: cursive;
+}
+
+.zoro > .mouth {
+    width: 80px;
+    height: 25px;
+    margin: auto;
+    margin-top: 40px;
+    background-color: red;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.bird {
+    height: 460px;
+    width: 420px;
+    /* display: flex; */
+    /* background: #ffecc8; */
+    border-radius: 50px;
+    position: relative;
+}
+
+.hollow {
+    position: absolute;
+    top: 0;
+    left: 30%;
+    width: 40%;
+    height: 10%;
+    background-color: #fff;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.bird > .body {
+    background-color: #58cc02;
+    width: 90%;
+    height: 90%;
+    margin-left: 5%;
+    border-radius: 5pc;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.wings {
+    /* background: #000; */
+    position: absolute;
+    top: 40%;
+    left: 0;
+    margin-left: -10%;
+    width: 120%;
+    height: 40%;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wing {
+    height: 100%;
+    width: 20%;
+    background-color: #58cc02;
+    border-bottom-right-radius: 50%;
+    transform: rotateZ(40deg);
+}
+
+.wing:last-child {
+    transform: rotateZ(-40deg);
+    border-radius: 0;
+    border-bottom-left-radius: 100%;
+}
