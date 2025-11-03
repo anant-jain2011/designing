@@ -85,7 +85,7 @@ const levelClear = () => {
 
     document.querySelectorAll(".tick").forEach((t) => (t.hidden = true));
 
-    populateLevel();
+    populateLevel(uLevel);
 
     localStorage.setItem("ulevel", uLevel);
 };
@@ -141,10 +141,9 @@ if (levels.length == 0) {
     }
 }
 
-const clevel = levels[uLevel - 1];
-let j = 0;
-
-const populateLevel = () =>
+const populateLevel = (uLevel) => {
+    const clevel = levels[uLevel - 1];
+    let j = 0;
     sectios.forEach((s, h) => {
         for (let i = 0; i < 4; i++) {
             const ring = document.createElement("div");
@@ -172,5 +171,6 @@ const populateLevel = () =>
 
         s.onclick = moveRing;
     });
+}
 
 populateLevel();
