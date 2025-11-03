@@ -9,6 +9,7 @@
     font-weight: 400;
     font-style: normal;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
