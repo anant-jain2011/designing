@@ -173,4 +173,4 @@ const populateLevel = (uLevel) => {
     });
 }
 
-populateLevel();
+populateLevel(uLevel);
