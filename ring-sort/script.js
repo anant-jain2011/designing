@@ -1,5 +1,6 @@
 const sections = document.querySelectorAll(".section");
 const toast = document.querySelector(".toast");
+const levelToast = document.querySelector(".l-toast");
 let uLevel = localStorage.getItem("ulevel") || 1;
 let moves = 0;
 
@@ -38,18 +39,29 @@ const moveRing = (e) => {
     if (prevSel && e.target.classList.value.includes("section")) {
         if (prevSel.parentElement != e.target) {
             // prevSel.animate(...keyframes[1]); // start animation
+            if (e.target.querySelectorAll(".ring").length == 5) {
+                toast.innerHTML = "Cannot place more than 5 rings!";
+                toast.animate(...keyframes[0]);
+                return;
+            }
             e.target.prepend(prevSel); // copy to target
             moves++; // icrement moves
 
-            let rings = [...e.target.querySelectorAll(".ring")];
+            sections.forEach((s) => {
+                let rings = [...s.querySelectorAll(".ring")];
 
-            e.target.querySelector(".tick").hidden = !(
-                rings.every(
-                    (el) =>
-                        el.getAttribute("my_bg") ==
-                        rings[0].getAttribute("my_bg")
-                ) && rings.length == 4
-            );
+                s.querySelector(".tick").hidden = !(
+                    rings.every(
+                        (el) =>
+                            el.getAttribute("my_bg") ==
+                            rings[0].getAttribute("my_bg")
+                    ) && rings.length == 4
+                );
+            });
+
+            if (document.querySelectorAll(".tick:not([hidden])").length == 4) {
+                levelClear();
+            }
         }
 
         prevSel?.classList.remove("selected"); // unselect
@@ -58,8 +70,23 @@ const moveRing = (e) => {
 };
 
 const levelClear = () => {
+    levelToast.animate(...keyframes[0]);
+    moves = 0;
+    if (uLevel >= 10) {
+        levelToast.innerHTML = "Level Cleared!! You've completed all levels.";
+        levelToast.animate(...keyframes[0]);
+        return;
+    }
     uLevel++;
     mI.innerHTML = "Level: " + uLevel + " || Moves: " + moves;
+
+    const rings = document.querySelectorAll(".ring");
+    rings.forEach((r) => r.remove());
+
+    document.querySelectorAll(".tick").forEach((t) => (t.hidden = true));
+
+    populateLevel();
+
     localStorage.setItem("ulevel", uLevel);
 };
 
@@ -117,30 +144,33 @@ if (levels.length == 0) {
 const clevel = levels[uLevel - 1];
 let j = 0;
 
-sectios.forEach((s, h) => {
-    for (let i = 0; i < 4; i++) {
-        const ring = document.createElement("div");
-        ring.style.backgroundColor = clevel.rings[h][i];
+const populateLevel = () =>
+    sectios.forEach((s, h) => {
+        for (let i = 0; i < 4; i++) {
+            const ring = document.createElement("div");
+            ring.style.backgroundColor = clevel.rings[h][i];
 
-        ring.id = j;
-        ring.setAttribute("my_bg", clevel.rings[h][i]);
-        ring.onclick = (e) => {
-            let prevSel = document.querySelector(".selected") || null;
-            prevSel &&
-                prevSel.id != e.target.id &&
-                prevSel?.classList.remove("selected");
+            ring.id = j;
+            ring.setAttribute("my_bg", clevel.rings[h][i]);
+            ring.onclick = (e) => {
+                let prevSel = document.querySelector(".selected") || null;
+                prevSel &&
+                    prevSel.id != e.target.id &&
+                    prevSel?.classList.remove("selected");
 
-            if (e.target == e.target.parentElement.querySelector(".ring")) {
-                e.target.classList.toggle("selected");
-            } else {
-                !prevSel && toast.animate(...keyframes[0]);
-            }
-        };
+                if (e.target == e.target.parentElement.querySelector(".ring")) {
+                    e.target.classList.toggle("selected");
+                } else {
+                    !prevSel && toast.animate(...keyframes[0]);
+                }
+            };
 
-        ring.classList.add("ring");
-        s.appendChild(ring);
-        j++;
-    }
+            ring.classList.add("ring");
+            s.appendChild(ring);
+            j++;
+        }
 
-    s.onclick = moveRing;
-});
+        s.onclick = moveRing;
+    });
+
+populateLevel();
